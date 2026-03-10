@@ -1,14 +1,35 @@
 import 'package:flutter/material.dart';
+import 'package:go_router/go_router.dart';
 
-class HomeScreen extends StatelessWidget {
+class HomeScreen extends StatefulWidget {
   const HomeScreen({super.key});
+
+  @override
+  State<HomeScreen> createState() => _HomeScreenState();
+}
+
+class _HomeScreenState extends State<HomeScreen> {
+  bool _isDarkMode = false;
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: const Text('Customer Management Ecom'),
+        title: FittedBox(
+          fit: BoxFit.scaleDown,
+          child: const Text('Customer Management Ecom'),
+        ),
         centerTitle: true,
+        actions: [
+          Padding(
+            padding: const EdgeInsets.only(right: 10),
+            child: IconButton(
+              onPressed: () => setState(() => _isDarkMode = !_isDarkMode),
+              icon: Icon(_isDarkMode ? Icons.dark_mode : Icons.light_mode),
+              iconSize: 20,
+            ),
+          ),
+        ],
       ),
       backgroundColor: const Color.fromARGB(255, 249, 255, 169),
       body: Column(
@@ -18,7 +39,7 @@ class HomeScreen extends StatelessWidget {
             padding: const EdgeInsets.all(15.0),
             child: ElevatedButton.icon(
               onPressed: () {
-                //Navigate add customer screen
+                context.push('/create-customer');
               },
               icon: const Icon(Icons.add),
               label: const Text('Create New Customer'),
