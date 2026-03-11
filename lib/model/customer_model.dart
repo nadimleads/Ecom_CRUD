@@ -1,37 +1,29 @@
-// class Product {
-//   final String id;
-//   final String name;
-//   final String description;
-//   final double price;
-//   final String image; // asset image path
-//   final String category; // NEW
+import 'package:hive/hive.dart';
+part 'customer_model.g.dart';
 
-//   Product({
-//     required this.id,
-//     required this.name,
-//     required this.description,
-//     required this.price,
-//     required this.image,
-//     required this.category,
-//   });
-// }
+@HiveType(typeId: 0)
+class Customer {
+  @HiveField(0)
+  String name;
 
-// // Dummy products
-// final List<Product> dummyProducts = [
-//   Product(
-//     id: '1',
-//     name: 'Laptop',
-//     description: 'High performance laptop',
-//     price: 1200,
-//     image: 'assets/images/laptop.png',
-//     category: 'Laptops',
-//   ),
-//   Product(
-//     id: '2',
-//     name: 'Phone',
-//     description: 'Latest smartphone',
-//     price: 800,
-//     image: 'assets/images/phone.png',
-//     category: 'Phones',
-//   ),
-// ];
+  @HiveField(1)
+  String phone;
+
+  @HiveField(2)
+  String email;
+
+  @HiveField(3)
+  String address;
+
+  @HiveField(4)
+  String secondaryAddress;
+
+  // Generative Constructor using Named Parameters.
+  Customer({
+    required this.name,
+    required this.phone,
+    required this.email,
+    required this.address,
+    required this.secondaryAddress,
+  });
+}

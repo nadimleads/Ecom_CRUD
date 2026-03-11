@@ -10,6 +10,7 @@ class CreateCustomerScreen extends StatefulWidget {
 class _CreateCustomerScreenState extends State<CreateCustomerScreen> {
   //for form making
   final _formKey = GlobalKey<FormState>();
+  //controllers for storing input
   final _nameController = TextEditingController();
   final _phoneController = TextEditingController();
   final _emialController = TextEditingController();
@@ -38,9 +39,19 @@ class _CreateCustomerScreenState extends State<CreateCustomerScreen> {
                   enableSuggestions: true,
                   controller: _nameController,
                   decoration: InputDecoration(
+                    filled: true,
+                    fillColor: Colors.white,
                     labelText: "Customer Name",
-                    border: OutlineInputBorder(),
+                    border: OutlineInputBorder(
+                      borderRadius: BorderRadius.all(Radius.circular(8)),
+                    ),
                   ),
+                  validator: (value) {
+                    if (value == null || value.trim().isEmpty) {
+                      return "Customer's name is required";
+                    }
+                    return null;
+                  },
                 ),
 
                 const SizedBox(height: 16),
@@ -50,9 +61,34 @@ class _CreateCustomerScreenState extends State<CreateCustomerScreen> {
                   keyboardType: TextInputType.phone,
                   controller: _phoneController,
                   decoration: InputDecoration(
-                    labelText: "Phone Number",
-                    border: OutlineInputBorder(),
+                    filled: true,
+                    fillColor: Colors.white,
+                    labelText: "Phone Number(BD)",
+                    hintText: '01xxxxxxxxx',
+                    prefixText: "+88",
+                    border: OutlineInputBorder(
+                      borderRadius: BorderRadius.all(Radius.circular(8)),
+                    ),
                   ),
+                  validator: (value) {
+                    if (value == null || value.trim().isEmpty) {
+                      return "Phone number is required";
+                    }
+                    if (!value.startsWith("01")) {}
+                    if (value.trim().length != 11) {
+                      return "The number must be 11 digits";
+                    }
+                    //
+                    final bool isValidBangladeshiNumber = RegExp(
+                      r'^01[3-9]\d{8}$',
+                    ).hasMatch(value.trim());
+
+                    if (!isValidBangladeshiNumber) {
+                      return "Please enter a valid 11 Digit Bangladeshi number!";
+                    }
+
+                    return null;
+                  },
                 ),
 
                 const SizedBox(height: 16),
@@ -63,22 +99,44 @@ class _CreateCustomerScreenState extends State<CreateCustomerScreen> {
                   controller: _emialController,
 
                   decoration: InputDecoration(
+                    filled: true,
+                    fillColor: Colors.white,
                     labelText: "Email",
-                    border: OutlineInputBorder(),
+                    border: OutlineInputBorder(
+                      borderRadius: BorderRadius.all(Radius.circular(8)),
+                    ),
                   ),
+                  validator: (value) {
+                    if (value == null || value.isEmpty) {
+                      return "Enter an Email Address";
+                    }
+                    if (!value.contains('@')) {
+                      return "Enter a valid Email";
+                    }
+                    return null;
+                  },
                 ),
 
                 const SizedBox(height: 16),
 
                 // Address
                 TextFormField(
-                  maxLines: 2,
+                  maxLines: 3,
                   controller: _addressController,
-
                   decoration: InputDecoration(
+                    filled: true,
+                    fillColor: Colors.white,
                     labelText: "Address",
-                    border: OutlineInputBorder(),
+                    border: OutlineInputBorder(
+                      borderRadius: BorderRadius.all(Radius.circular(8)),
+                    ),
                   ),
+                  validator: (value) {
+                    if (value == null || value.trim().isEmpty) {
+                      return "Address is required";
+                    }
+                    return null;
+                  },
                 ),
 
                 const SizedBox(height: 16),
@@ -86,7 +144,6 @@ class _CreateCustomerScreenState extends State<CreateCustomerScreen> {
                 // Secondary Address
                 TextFormField(
                   controller: _secondaryaddressController,
-
                   decoration: InputDecoration(
                     filled: true,
                     fillColor: Colors.white,
@@ -95,6 +152,12 @@ class _CreateCustomerScreenState extends State<CreateCustomerScreen> {
                       borderRadius: BorderRadius.all(Radius.circular(8)),
                     ),
                   ),
+                  validator: (value) {
+                    if (value == null || value.trim().isEmpty) {
+                      return "Secondary Address is required(if none, place the same address)";
+                    }
+                    return null;
+                  },
                 ),
 
                 const SizedBox(height: 25),
@@ -109,9 +172,11 @@ class _CreateCustomerScreenState extends State<CreateCustomerScreen> {
                     ),
                     onPressed: () {
                       if (_formKey.currentState!.validate()) {
+                        print('Form Valid');
+
                         //save to hive
                         final name = _nameController.text;
-                        final phone = _phoneController.text;
+                        final phone = "+88${_phoneController.text}";
                         final email = _emialController.text;
                         final address = _addressController.text;
                         final secondaryAddress =
