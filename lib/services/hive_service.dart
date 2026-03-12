@@ -1,26 +1,27 @@
 import 'package:ecoms/model/customer_model.dart';
 import 'package:hive/hive.dart';
 
-// class HiveService {
-//   final Box<Customer> _customerBox = Hive.box<Customer>('customers');
+class HiveService {
+  // Open the "customers" box that stores Customer objects and _customerBox is the DB table
+  final Box<Customer> _customerBox = Hive.box<Customer>('customers');
 
-//   // CREATE
-//   Future<void> addCustomer(Customer customer) async {
-//     await _customerBox.add(customer);
-//   }
+  //Create Method
+  Future<void> addCustomer(Customer custcrt) async {
+    await _customerBox.add(custcrt);
+  }
 
-//   // READ
-//   List<Customer> getCustomers() {
-//     return _customerBox.values.toList();
-//   }
+  //Read Method
+  Future<List<Customer>> getCustomer() async {
+    return _customerBox.values.toList();
+  }
 
-//   // UPDATE
-//   Future<void> updateCustomer(int index, Customer customer) async {
-//     await _customerBox.putAt(index, customer);
-//   }
+  //update Method
+  Future<void> updateCustomer(int index, Customer custupdt) async {
+    await _customerBox.putAt(index, custupdt); //map style
+  }
 
-//   // DELETE
-//   Future<void> deleteCustomer(int index) async {
-//     await _customerBox.deleteAt(index);
-//   }
-// }
+  //deletee Method
+  Future<void> deleteCustomer(int index) async {
+    await _customerBox.deleteAt(index);
+  }
+}

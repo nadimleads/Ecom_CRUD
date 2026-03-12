@@ -3,8 +3,6 @@ import 'package:flutter/material.dart';
 import 'package:ecoms/model/customer_model.dart';
 import 'package:hive_flutter/hive_flutter.dart';
 // import 'package:flutter_riverpod/flutter_riverpod.dart';
-// import 'package:go_router/go_router.dart';
-// import 'screens/home_screen.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
