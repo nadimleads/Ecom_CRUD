@@ -1,13 +1,18 @@
+import 'package:ecoms/providers/customer_provider.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:go_router/go_router.dart';
+import 'package:ecoms/model/customer_model.dart';
 
-class CreateCustomerScreen extends StatefulWidget {
+class CreateCustomerScreen extends ConsumerStatefulWidget {
   const CreateCustomerScreen({super.key});
 
   @override
-  State<CreateCustomerScreen> createState() => _CreateCustomerScreenState();
+  ConsumerState<CreateCustomerScreen> createState() =>
+      _CreateCustomerScreenState();
 }
 
-class _CreateCustomerScreenState extends State<CreateCustomerScreen> {
+class _CreateCustomerScreenState extends ConsumerState<CreateCustomerScreen> {
   //for form making
   final _formKey = GlobalKey<FormState>();
   //controllers for storing input
@@ -175,18 +180,18 @@ class _CreateCustomerScreenState extends State<CreateCustomerScreen> {
                         print('Form Valid');
 
                         //save to hive
-                        final name = _nameController.text;
-                        final phone = "+88${_phoneController.text}";
-                        final email = _emialController.text;
-                        final address = _addressController.text;
-                        final secondaryAddress =
-                            _secondaryaddressController.text;
+                        final newCustomer = Customer(
+                          name: _nameController.text,
+                          phone: "+88${_phoneController.text}",
+                          email: _emialController.text,
+                          address: _addressController.text,
+                          secondaryAddress: _secondaryaddressController.text,
+                        );
 
-                        print(name);
-                        print(phone);
-                        print(email);
-                        print(address);
-                        print(secondaryAddress);
+                        ref
+                            .read(customerProvider.notifier)
+                            .addCustomer(newCustomer);
+                        context.pop();
                       }
                     },
                     child: const Text(

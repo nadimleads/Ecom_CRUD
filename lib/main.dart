@@ -2,6 +2,7 @@ import 'package:ecoms/router/app_router.dart';
 import 'package:flutter/material.dart';
 import 'package:ecoms/model/customer_model.dart';
 import 'package:hive_flutter/hive_flutter.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
 // import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 void main() async {
@@ -11,7 +12,7 @@ void main() async {
   await Hive.openBox<Customer>(
     'customers',
   ); //Opens database //"customers" is the database table.
-  runApp(const TheApp());
+  runApp(ProviderScope(child: const TheApp()));
 }
 
 class TheApp extends StatelessWidget {

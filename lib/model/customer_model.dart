@@ -3,6 +3,15 @@ part 'customer_model.g.dart';
 
 @HiveType(typeId: 0)
 class Customer {
+  // Generative Constructor using Named Parameters.
+  Customer({
+    required this.name,
+    required this.phone,
+    required this.email,
+    required this.address,
+    required this.secondaryAddress,
+  });
+
   @HiveField(0)
   String name;
 
@@ -17,13 +26,4 @@ class Customer {
 
   @HiveField(4)
   String secondaryAddress;
-
-  // Generative Constructor using Named Parameters.
-  Customer({
-    required this.name,
-    required this.phone,
-    required this.email,
-    required this.address,
-    required this.secondaryAddress,
-  });
 }

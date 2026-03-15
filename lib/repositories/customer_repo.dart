@@ -14,8 +14,8 @@ class CustomerRepo {
     return _hiveservice.getCustomer();
   }
 
-  Future<void> updateCustomer(int index, Customer customer) {
-    return _hiveservice.updateCustomer(index, customer);
+  Future<void> updateCustomer(int index, Customer customerUpdate) {
+    return _hiveservice.updateCustomer(index, customerUpdate);
   }
 
   Future<void> deleteCustomer(int index) {

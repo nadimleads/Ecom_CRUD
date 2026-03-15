@@ -1,18 +1,24 @@
+// import 'package:ecoms/model/customer_model.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
+import 'package:ecoms/providers/customer_provider.dart';
+import 'package:ecoms/widgets/customer_card.dart';
 
-class HomeScreen extends StatefulWidget {
+class HomeScreen extends ConsumerStatefulWidget {
   const HomeScreen({super.key});
 
   @override
-  State<HomeScreen> createState() => _HomeScreenState();
+  ConsumerState<HomeScreen> createState() => _HomeScreenState();
 }
 
-class _HomeScreenState extends State<HomeScreen> {
+class _HomeScreenState extends ConsumerState<HomeScreen> {
   bool _isDarkMode = false;
 
   @override
-  Widget build(BuildContext context) {
+  Widget build(BuildContext contextOfHome) {
+    final customers = ref.watch(customerProvider);
+
     return Scaffold(
       appBar: AppBar(
         title: FittedBox(
@@ -51,13 +57,23 @@ class _HomeScreenState extends State<HomeScreen> {
           ),
 
           //customer list er jonno (for Read)
-          const Expanded(
-            child: Center(
-              child: Text(
-                'There is no Customer Available',
-                style: TextStyle(fontSize: 16),
-              ),
-            ),
+          Expanded(
+            child:
+                customers.isEmpty
+                    ? const Center(
+                      child: Text(
+                        'There is no Customer Available',
+                        style: TextStyle(fontSize: 16),
+                      ),
+                    )
+                    : ListView.builder(
+                      itemCount: customers.length, //bujhinai
+                      itemBuilder: (contextOfHome, index) //bujhinai
+                      {
+                        final customer = customers[index];
+                        return CustomerCard(customer: customer, index: index);
+                      },
+                    ),
           ),
         ],
       ),
