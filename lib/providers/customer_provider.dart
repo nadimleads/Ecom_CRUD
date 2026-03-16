@@ -11,7 +11,8 @@ class CustomerNotifier extends StateNotifier<List<Customer>> {
   }
 
   Future<void> loadCustomer() async {
-    state = await repo.getCustomer(); //connection with repo
+    state =
+        await repo.getCustomer(); //connection with repo+UI rebuild with state
   }
 
   void addCustomer(Customer custadd) async {
@@ -30,6 +31,7 @@ class CustomerNotifier extends StateNotifier<List<Customer>> {
   }
 }
 
+//Riverpod Bridge between my UI and notifier
 final customerProvider =
     StateNotifierProvider<CustomerNotifier, List<Customer>>((ref) {
       //

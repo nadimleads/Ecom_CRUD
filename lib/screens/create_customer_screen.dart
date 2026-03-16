@@ -81,17 +81,21 @@ class _CreateCustomerScreenState extends ConsumerState<CreateCustomerScreen> {
                     if (value == null || value.trim().isEmpty) {
                       return "Phone number is required";
                     }
-                    if (!value.startsWith("01")) {}
-                    if (value.trim().length != 11) {
-                      return "The number must be 11 digits";
+
+                    if (!value.startsWith("01")) {
+                      return 'BD mobile Number Must Start with 01';
                     }
-                    //
-                    final bool isValidBangladeshiNumber = RegExp(
+
+                    if (value.length != 11) {
+                      return "Phone number must be 11 digits";
+                    }
+
+                    final bool isValid = RegExp(
                       r'^01[3-9]\d{8}$',
                     ).hasMatch(value.trim());
 
-                    if (!isValidBangladeshiNumber) {
-                      return "Please enter a valid 11 Digit Bangladeshi number!";
+                    if (!isValid) {
+                      return "Enter a valid Bangladeshi number";
                     }
 
                     return null;

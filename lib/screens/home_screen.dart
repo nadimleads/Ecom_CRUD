@@ -23,7 +23,10 @@ class _HomeScreenState extends ConsumerState<HomeScreen> {
       appBar: AppBar(
         title: FittedBox(
           fit: BoxFit.scaleDown,
-          child: const Text('Customer Management Ecom'),
+          child: const Text(
+            'Customer Management Ecom',
+            style: TextStyle(fontWeight: FontWeight.bold),
+          ),
         ),
         centerTitle: true,
         actions: [
@@ -68,7 +71,10 @@ class _HomeScreenState extends ConsumerState<HomeScreen> {
                     )
                     : ListView.builder(
                       itemCount: customers.length,
-                      itemBuilder: (contextOfHome, index) //bujhinai
+                      itemBuilder: (
+                        contextOfHome,
+                        index,
+                      ) //bujhinai ei itembuilder er part ta
                       {
                         final customer = customers[index];
                         return CustomerCard(

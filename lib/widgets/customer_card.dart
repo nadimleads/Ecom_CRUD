@@ -1,10 +1,11 @@
 import 'package:ecoms/model/customer_model.dart';
+import 'package:ecoms/widgets/edit_customer_dialog.dart';
 import 'package:flutter/material.dart';
 
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:ecoms/providers/customer_provider.dart';
 
-//bujhinai
+//full clear na
 class CustomerCard extends ConsumerWidget {
   final Customer customer;
   final int index;
@@ -57,7 +58,16 @@ class CustomerCard extends ConsumerWidget {
                   ],
               onSelected: (value) {
                 if (value == "edit") {
-                  // we will implement later
+                  showDialog(
+                    context: context,
+
+                    //ekhane context e (__) keno use holo ar tahole ki notun tree contex create holo?
+                    builder:
+                        (__) => EditCustomerDialog(
+                          customer: customer,
+                          index: index,
+                        ),
+                  );
                 }
 
                 if (value == "delete") {
