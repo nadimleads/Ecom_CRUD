@@ -1,4 +1,5 @@
 // import 'package:ecoms/model/customer_model.dart';
+import 'package:ecoms/providers/theme_provider.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
@@ -13,7 +14,7 @@ class HomeScreen extends ConsumerStatefulWidget {
 }
 
 class _HomeScreenState extends ConsumerState<HomeScreen> {
-  bool _isDarkMode = false;
+  // bool _isDarkMode = false;
 
   @override
   Widget build(BuildContext contextOfHome) {
@@ -30,17 +31,23 @@ class _HomeScreenState extends ConsumerState<HomeScreen> {
         ),
         centerTitle: true,
         actions: [
+          //ThemeProvider based work
           Padding(
-            padding: const EdgeInsets.only(right: 10),
+            padding: const EdgeInsets.only(right: 05),
             child: IconButton(
-              onPressed: () => setState(() => _isDarkMode = !_isDarkMode),
-              icon: Icon(_isDarkMode ? Icons.dark_mode : Icons.light_mode),
-              iconSize: 20,
+              onPressed: () {
+                ref.read(themeProvider.notifier).toggleTheme();
+              },
+              icon: Icon(
+                ref.watch(themeProvider) == ThemeMode.dark
+                    ? Icons.dark_mode
+                    : Icons.light_mode,
+              ),
             ),
           ),
         ],
       ),
-      backgroundColor: const Color.fromARGB(255, 249, 255, 169),
+      backgroundColor: Theme.of(context).colorScheme.background,
       body: Column(
         children: [
           //Add Customer button
