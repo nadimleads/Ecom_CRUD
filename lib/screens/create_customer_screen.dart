@@ -65,11 +65,13 @@ class _CreateCustomerScreenState extends ConsumerState<CreateCustomerScreen> {
                 TextFormField(
                   keyboardType: TextInputType.phone,
                   controller: _phoneController,
+                  maxLength: 11,
                   decoration: InputDecoration(
                     filled: true,
                     fillColor: Colors.white,
                     labelText: "Phone Number(BD)",
                     hintText: '01xxxxxxxxx',
+                    counterText: '',
                     prefixText: "+88",
                     border: OutlineInputBorder(
                       borderRadius: BorderRadius.all(Radius.circular(8)),

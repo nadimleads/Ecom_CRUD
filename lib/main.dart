@@ -12,7 +12,7 @@ void main() async {
   await Hive.openBox<Customer>(
     'customers',
   ); //Opens database //"customers" is the database table.
-  runApp(ProviderScope(child: const TheApp()));
+  runApp(ProviderScope(child: const TheApp())); //activaing Riverpod provider
 }
 
 class TheApp extends StatelessWidget {

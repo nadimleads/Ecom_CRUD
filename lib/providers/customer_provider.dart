@@ -32,6 +32,7 @@ class CustomerNotifier extends StateNotifier<List<Customer>> {
 
 final customerProvider =
     StateNotifierProvider<CustomerNotifier, List<Customer>>((ref) {
+      //
       final hive = HiveService(); // ← created here
       final repository = CustomerRepo(hive); // ← depends on hive
 

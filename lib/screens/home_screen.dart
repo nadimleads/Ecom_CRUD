@@ -50,13 +50,13 @@ class _HomeScreenState extends ConsumerState<HomeScreen> {
               icon: const Icon(Icons.add),
               label: const Text('Create New Customer'),
               style: ElevatedButton.styleFrom(
-                backgroundColor: const Color.fromARGB(255, 136, 194, 138),
+                backgroundColor: const Color.fromARGB(255, 41, 77, 42),
                 foregroundColor: Colors.white,
               ),
             ),
           ),
 
-          //customer list er jonno (for Read)
+          //customer list er jonno (for Read/get operation)
           Expanded(
             child:
                 customers.isEmpty
@@ -67,11 +67,14 @@ class _HomeScreenState extends ConsumerState<HomeScreen> {
                       ),
                     )
                     : ListView.builder(
-                      itemCount: customers.length, //bujhinai
+                      itemCount: customers.length,
                       itemBuilder: (contextOfHome, index) //bujhinai
                       {
                         final customer = customers[index];
-                        return CustomerCard(customer: customer, index: index);
+                        return CustomerCard(
+                          customer: customer,
+                          index: index,
+                        ); //(clear na)
                       },
                     ),
           ),
