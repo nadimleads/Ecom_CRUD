@@ -1,24 +1,45 @@
 import 'package:flutter/material.dart';
-// import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_riverpod/legacy.dart';
+import 'package:ecoms/services/secure_storage_service.dart';
 
 //theme notifier is a statecontroller
 // so this notifier manages ThemeMode state
 class ThemeNotifier extends StateNotifier<ThemeMode> {
+  final SecureStorageService storageService;
   //initial state by constructor
-  ThemeNotifier() : super(ThemeMode.light);
+  ThemeNotifier(this.storageService) : super(ThemeMode.light) {
+    loadTheme();
+  }
 
-  void toggleTheme() {
-    if (state == ThemeMode.light) {
+  Future<void> loadTheme() async {
+    final savedTheme = await storageService.getTheme();
+
+    if (savedTheme == "dark") {
       state = ThemeMode.dark;
     } else {
       state = ThemeMode.light;
     }
   }
+
+  Future<void> toggleTheme() async {
+    if (state == ThemeMode.light) {
+      state = ThemeMode.dark;
+      await storageService.saveTheme("dark");
+    } else {
+      state = ThemeMode.light;
+      await storageService.saveTheme("light");
+    }
+  }
 }
 
-//bridge
-final themeProvider = StateNotifierProvider<ThemeNotifier, ThemeMode>(
-  // When someone asks for themeProvider create ThemeNotifier
-  (_) => ThemeNotifier(),
-);
+//bridge of storage with Riverpod to manage
+final secureStorageProvider = Provider((ref) {
+  return SecureStorageService();
+});
+
+//bidge of theme with Riverpod provide je kore
+final themeProvider = StateNotifierProvider<ThemeNotifier, ThemeMode>((ref) {
+  final storage = ref.read(secureStorageProvider);
+  return ThemeNotifier(storage);
+});

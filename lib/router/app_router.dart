@@ -7,7 +7,7 @@ final GoRouter appRouter = GoRouter(
     //main to home page
     GoRoute(path: '/', builder: (context, state) => HomeScreen()),
 
-    //create customer
+    //create customer page
     GoRoute(
       path: '/create-customer',
       builder: (context, state) => CreateCustomerScreen(),

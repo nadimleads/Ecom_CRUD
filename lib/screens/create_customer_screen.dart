@@ -26,7 +26,7 @@ class _CreateCustomerScreenState extends ConsumerState<CreateCustomerScreen> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(title: const Text('Create Customer'), centerTitle: true),
-      backgroundColor: const Color.fromARGB(255, 249, 255, 169),
+      backgroundColor: Theme.of(context).colorScheme.surface,
 
       // form body here
       body: SingleChildScrollView(
@@ -45,10 +45,10 @@ class _CreateCustomerScreenState extends ConsumerState<CreateCustomerScreen> {
                   controller: _nameController,
                   decoration: InputDecoration(
                     filled: true,
-                    fillColor: Colors.white,
+                    // fillColor: Colors.white,
                     labelText: "Customer Name",
                     border: OutlineInputBorder(
-                      borderRadius: BorderRadius.all(Radius.circular(8)),
+                      borderRadius: BorderRadius.all(Radius.circular(15)),
                     ),
                   ),
                   validator: (value) {
@@ -68,13 +68,12 @@ class _CreateCustomerScreenState extends ConsumerState<CreateCustomerScreen> {
                   maxLength: 11,
                   decoration: InputDecoration(
                     filled: true,
-                    fillColor: Colors.white,
                     labelText: "Phone Number(BD)",
                     hintText: '01xxxxxxxxx',
                     counterText: '',
                     prefixText: "+88",
                     border: OutlineInputBorder(
-                      borderRadius: BorderRadius.all(Radius.circular(8)),
+                      borderRadius: BorderRadius.all(Radius.circular(15)),
                     ),
                   ),
                   validator: (value) {
@@ -91,7 +90,7 @@ class _CreateCustomerScreenState extends ConsumerState<CreateCustomerScreen> {
                     }
 
                     final bool isValid = RegExp(
-                      r'^01[3-9]\d{8}$',
+                      r'^01[2-9]\d{8}$',
                     ).hasMatch(value.trim());
 
                     if (!isValid) {
@@ -111,10 +110,9 @@ class _CreateCustomerScreenState extends ConsumerState<CreateCustomerScreen> {
 
                   decoration: InputDecoration(
                     filled: true,
-                    fillColor: Colors.white,
                     labelText: "Email",
                     border: OutlineInputBorder(
-                      borderRadius: BorderRadius.all(Radius.circular(8)),
+                      borderRadius: BorderRadius.all(Radius.circular(15)),
                     ),
                   ),
                   validator: (value) {
@@ -136,10 +134,9 @@ class _CreateCustomerScreenState extends ConsumerState<CreateCustomerScreen> {
                   controller: _addressController,
                   decoration: InputDecoration(
                     filled: true,
-                    fillColor: Colors.white,
                     labelText: "Address",
                     border: OutlineInputBorder(
-                      borderRadius: BorderRadius.all(Radius.circular(8)),
+                      borderRadius: BorderRadius.all(Radius.circular(15)),
                     ),
                   ),
                   validator: (value) {
@@ -154,13 +151,13 @@ class _CreateCustomerScreenState extends ConsumerState<CreateCustomerScreen> {
 
                 // Secondary Address
                 TextFormField(
+                  maxLines: 2,
                   controller: _secondaryaddressController,
                   decoration: InputDecoration(
                     filled: true,
-                    fillColor: Colors.white,
                     labelText: "Secondary Address (Optional)",
                     border: OutlineInputBorder(
-                      borderRadius: BorderRadius.all(Radius.circular(8)),
+                      borderRadius: BorderRadius.all(Radius.circular(15)),
                     ),
                   ),
                   validator: (value) {

@@ -19,7 +19,7 @@ class EditCustomerDialog extends ConsumerStatefulWidget {
 }
 
 class _EditCustomerDialogState extends ConsumerState<EditCustomerDialog> {
-  //putting this Inside This provate Class
+  //putting this Inside This private Class
   final _formKey = GlobalKey<FormState>();
   late TextEditingController _nameController;
   late TextEditingController _phoneController;
@@ -205,5 +205,15 @@ class _EditCustomerDialogState extends ConsumerState<EditCustomerDialog> {
         ),
       ),
     );
+  }
+
+  @override
+  void dispose() {
+    _nameController.dispose();
+    _phoneController.dispose();
+    _emialController.dispose();
+    _addressController.dispose();
+    _secondaryaddressController.dispose();
+    super.dispose();
   }
 }
