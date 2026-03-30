@@ -12,7 +12,11 @@ class AuthNotifier extends StateNotifier<bool> {
   Future<void> checkLogin() async {
     final value = await storage.getAuthStatus(); // TEMP reuse key
 
-    state = value == "loggedIn";
+    if (value == "loggedIn") {
+      state = true;
+    } else {
+      state = false;
+    }
   }
 
   Future<void> login() async {

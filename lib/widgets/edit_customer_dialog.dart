@@ -75,15 +75,18 @@ class _EditCustomerDialogState extends ConsumerState<EditCustomerDialog> {
 
               /// Phone
               TextFormField(
-                controller: _phoneController,
                 keyboardType: TextInputType.phone,
+                controller: _phoneController,
                 maxLength: 11,
-                decoration: const InputDecoration(
-                  labelText: "Phone Number",
-                  hintText: "01xxxxxxxxx",
-                  prefixText: "+88 ",
-                  counterText: "",
-                  border: OutlineInputBorder(),
+                decoration: InputDecoration(
+                  filled: true,
+                  labelText: "Phone Number(BD)",
+                  hintText: '01xxxxxxxxx',
+                  counterText: '',
+                  prefixText: "+88",
+                  border: OutlineInputBorder(
+                    borderRadius: BorderRadius.all(Radius.circular(15)),
+                  ),
                 ),
                 validator: (value) {
                   if (value == null || value.trim().isEmpty) {
@@ -99,7 +102,7 @@ class _EditCustomerDialogState extends ConsumerState<EditCustomerDialog> {
                   }
 
                   final bool isValid = RegExp(
-                    r'^01[3-9]\d{8}$',
+                    r'^01[2-9]\d{8}$',
                   ).hasMatch(value.trim());
 
                   if (!isValid) {
@@ -112,21 +115,33 @@ class _EditCustomerDialogState extends ConsumerState<EditCustomerDialog> {
 
               const SizedBox(height: 16),
 
-              /// Email
+              // Email
               TextFormField(
-                controller: _emialController,
                 keyboardType: TextInputType.emailAddress,
-                decoration: const InputDecoration(
+                controller: _emialController,
+                decoration: InputDecoration(
+                  filled: true,
                   labelText: "Email",
-                  border: OutlineInputBorder(),
+                  border: const OutlineInputBorder(
+                    borderRadius: BorderRadius.all(Radius.circular(15)),
+                  ),
+                  prefixIcon: const Icon(Icons.email_outlined),
                 ),
                 validator: (value) {
-                  if (value == null || value.isEmpty) {
-                    return "Email is required";
+                  if (value == null || value.trim().isEmpty) {
+                    return "Email address is required";
                   }
 
-                  if (!value.contains("@")) {
-                    return "Enter a valid email";
+                  // Trim whitespace
+                  value = value.trim();
+
+                  // Strong email validation using RegExp
+                  final emailRegex = RegExp(
+                    r'^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$',
+                  );
+
+                  if (!emailRegex.hasMatch(value)) {
+                    return "Please enter a valid email address";
                   }
 
                   return null;

@@ -3,6 +3,7 @@ import 'package:flutter_secure_storage/flutter_secure_storage.dart';
 class SecureStorageService {
   static const _storage = FlutterSecureStorage();
 
+  // adding key
   static const _themeKey = "theme_mode";
   static const _authKey = "auth_status";
 

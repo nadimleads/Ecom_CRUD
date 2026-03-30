@@ -11,10 +11,22 @@ final appRouterProvider = Provider<GoRouter>((ref) {
   return GoRouter(
     initialLocation: '/',
     redirect: (context, state) {
-      if (!isLoggedIn) return '/login';
-      if (isLoggedIn && state.fullPath == '/login') return '/';
+      final isGoingToLogin = state.matchedLocation == '/login';
+
+      // Not logged in → Force go to Login screen
+      if (!isLoggedIn) {
+        return isGoingToLogin ? null : '/login';
+      }
+
+      // Logged in → Don't allow access to Login screen
+      if (isLoggedIn && isGoingToLogin) {
+        return '/';
+      }
+
+      // Allow access to all other routes
       return null;
     },
+
     routes: [
       GoRoute(path: '/login', builder: (context, state) => const LoginScreen()),
       GoRoute(path: '/', builder: (context, state) => const HomeScreen()),
