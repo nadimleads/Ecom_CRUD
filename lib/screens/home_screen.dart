@@ -1,4 +1,5 @@
 // import 'package:ecoms/model/customer_model.dart';
+import 'package:ecoms/providers/auth_provider.dart';
 import 'package:ecoms/providers/theme_provider.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
@@ -14,8 +15,6 @@ class HomeScreen extends ConsumerStatefulWidget {
 }
 
 class _HomeScreenState extends ConsumerState<HomeScreen> {
-  // bool _isDarkMode = false;
-
   @override
   Widget build(BuildContext contextOfHome) {
     final customers = ref.watch(customerProvider);
@@ -44,6 +43,13 @@ class _HomeScreenState extends ConsumerState<HomeScreen> {
                     : Icons.light_mode,
               ),
             ),
+          ),
+          // Logout button
+          IconButton(
+            icon: const Icon(Icons.logout),
+            onPressed: () {
+              ref.read(authProvider.notifier).logout();
+            },
           ),
         ],
       ),
@@ -79,7 +85,7 @@ class _HomeScreenState extends ConsumerState<HomeScreen> {
                     : ListView.builder(
                       itemCount: customers.length,
                       itemBuilder: (
-                        contextOfHome,
+                        ctx,
                         index,
                       ) //bujhinai ei itembuilder er part ta
                       {

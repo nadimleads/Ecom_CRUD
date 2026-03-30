@@ -191,7 +191,10 @@ class _EditCustomerDialogState extends ConsumerState<EditCustomerDialog> {
                       ref
                           .read(customerProvider.notifier)
                           .updateCustomer(widget.index, updatedCustomer);
-                      context.pop();
+
+                      if (context.mounted) {
+                        return context.pop();
+                      }
                     }
                   },
                   child: const Text(

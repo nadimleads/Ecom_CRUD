@@ -28,7 +28,7 @@ class CustomerCard extends ConsumerWidget {
               children: [
                 // name
                 Text(
-                  "name: ${customer.name}",
+                  customer.name,
                   style: const TextStyle(
                     fontSize: 16,
                     fontWeight: FontWeight.bold,

@@ -21,26 +21,23 @@ class TheApp extends ConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    //why widgetRef use hoy?
-    //for theme
     final themeMode = ref.watch(themeProvider);
 
+    // ✅ FIXED
+    final router = ref.watch(appRouterProvider);
+
     return MaterialApp.router(
+      routerConfig: router, // ✅ use this router
       debugShowCheckedModeBanner: false,
       title: 'Ecom CRUD Learning',
-      routerConfig: appRouter,
 
-      /// Light Theme
       theme: ThemeData(
         brightness: Brightness.light,
         primarySwatch: Colors.blue,
-        //primary switch er kaj ki?
       ),
 
-      /// Dark Theme
       darkTheme: ThemeData(brightness: Brightness.dark),
 
-      /// Theme controller
       themeMode: themeMode,
     );
   }
