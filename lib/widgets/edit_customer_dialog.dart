@@ -19,7 +19,7 @@ class EditCustomerDialog extends ConsumerStatefulWidget {
 }
 
 class _EditCustomerDialogState extends ConsumerState<EditCustomerDialog> {
-  //putting this Inside This private Class
+  //Putting this Inside This private Class
   final _formKey = GlobalKey<FormState>();
   late TextEditingController _nameController;
   late TextEditingController _phoneController;
@@ -43,6 +43,8 @@ class _EditCustomerDialogState extends ConsumerState<EditCustomerDialog> {
     );
   }
 
+  bool _autovalidation = false;
+
   @override
   Widget build(BuildContext context) {
     return AlertDialog(
@@ -51,14 +53,21 @@ class _EditCustomerDialogState extends ConsumerState<EditCustomerDialog> {
       content: SingleChildScrollView(
         child: Form(
           key: _formKey,
+          autovalidateMode:
+              _autovalidation
+                  ? AutovalidateMode.always
+                  : AutovalidateMode.disabled,
           child: Column(
             children: [
               /// Customer Name
               Padding(
                 padding: const EdgeInsets.only(top: 5),
-                child: TextFormField(
+                child:
+                //name part
+                TextFormField(
                   controller: _nameController,
                   decoration: const InputDecoration(
+                    prefixIcon: Icon(Icons.person_outline),
                     labelText: "Customer Name",
                     border: OutlineInputBorder(),
                   ),
@@ -79,6 +88,7 @@ class _EditCustomerDialogState extends ConsumerState<EditCustomerDialog> {
                 controller: _phoneController,
                 maxLength: 11,
                 decoration: InputDecoration(
+                  prefixIcon: const Icon(Icons.phone_outlined),
                   filled: true,
                   labelText: "Phone Number(BD)",
                   hintText: '01xxxxxxxxx',
@@ -120,12 +130,12 @@ class _EditCustomerDialogState extends ConsumerState<EditCustomerDialog> {
                 keyboardType: TextInputType.emailAddress,
                 controller: _emialController,
                 decoration: InputDecoration(
+                  prefixIcon: const Icon(Icons.email_outlined),
                   filled: true,
                   labelText: "Email",
                   border: const OutlineInputBorder(
                     borderRadius: BorderRadius.all(Radius.circular(15)),
                   ),
-                  prefixIcon: const Icon(Icons.email_outlined),
                 ),
                 validator: (value) {
                   if (value == null || value.trim().isEmpty) {
@@ -155,6 +165,8 @@ class _EditCustomerDialogState extends ConsumerState<EditCustomerDialog> {
                 controller: _addressController,
                 maxLines: 3,
                 decoration: const InputDecoration(
+                  prefixIcon: Icon(Icons.location_on_outlined),
+
                   labelText: "Address",
                   border: OutlineInputBorder(),
                 ),
@@ -172,6 +184,8 @@ class _EditCustomerDialogState extends ConsumerState<EditCustomerDialog> {
               TextFormField(
                 controller: _secondaryaddressController,
                 decoration: const InputDecoration(
+                  prefixIcon: Icon(Icons.add_location_outlined),
+
                   labelText: "Secondary Address",
                   border: OutlineInputBorder(),
                 ),
@@ -194,6 +208,10 @@ class _EditCustomerDialogState extends ConsumerState<EditCustomerDialog> {
                     backgroundColor: Colors.green,
                   ),
                   onPressed: () {
+                    setState(() {
+                      _autovalidation = true;
+                    });
+
                     if (_formKey.currentState!.validate()) {
                       final updatedCustomer = Customer(
                         name: _nameController.text,

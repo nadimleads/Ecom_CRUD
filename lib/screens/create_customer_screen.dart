@@ -21,6 +21,12 @@ class _CreateCustomerScreenState extends ConsumerState<CreateCustomerScreen> {
   final _addressController = TextEditingController();
   final _secondaryAddressController = TextEditingController(); // Better name
 
+  final _nameFocus = FocusNode();
+  final _phoneFocus = FocusNode();
+  final _emailFocus = FocusNode();
+  final _addressFocus = FocusNode();
+  final _secaddressFocus = FocusNode();
+
   // This is the key for real-time validation
   bool _autoValidate = false;
 
@@ -46,6 +52,9 @@ class _CreateCustomerScreenState extends ConsumerState<CreateCustomerScreen> {
                 // Customer Name
                 TextFormField(
                   controller: _nameController,
+                  focusNode: _nameFocus,
+                  textInputAction: TextInputAction.next,
+                  onFieldSubmitted: (_) => _phoneFocus.requestFocus(),
                   decoration: InputDecoration(
                     filled: true,
                     labelText: "Customer Name",
@@ -68,6 +77,9 @@ class _CreateCustomerScreenState extends ConsumerState<CreateCustomerScreen> {
                 TextFormField(
                   keyboardType: TextInputType.phone,
                   controller: _phoneController,
+                  focusNode: _phoneFocus,
+                  textInputAction: TextInputAction.next,
+                  onFieldSubmitted: (_) => _emailFocus.requestFocus(),
                   maxLength: 11,
                   decoration: InputDecoration(
                     filled: true,
@@ -112,6 +124,9 @@ class _CreateCustomerScreenState extends ConsumerState<CreateCustomerScreen> {
                 TextFormField(
                   keyboardType: TextInputType.emailAddress,
                   controller: _emailController,
+                  focusNode: _emailFocus,
+                  textInputAction: TextInputAction.next,
+                  onFieldSubmitted: (_) => _addressFocus.requestFocus(),
                   decoration: InputDecoration(
                     filled: true,
                     labelText: "Email",
@@ -144,6 +159,9 @@ class _CreateCustomerScreenState extends ConsumerState<CreateCustomerScreen> {
                 TextFormField(
                   maxLines: 3,
                   controller: _addressController,
+                  focusNode: _addressFocus,
+                  textInputAction: TextInputAction.next,
+                  onFieldSubmitted: (_) => _secaddressFocus.requestFocus(),
                   decoration: InputDecoration(
                     filled: true,
                     labelText: "Address",
@@ -166,13 +184,15 @@ class _CreateCustomerScreenState extends ConsumerState<CreateCustomerScreen> {
                 TextFormField(
                   maxLines: 2,
                   controller: _secondaryAddressController,
+                  focusNode: _secaddressFocus,
+                  textInputAction: TextInputAction.done,
                   decoration: InputDecoration(
                     filled: true,
-                    labelText: "Secondary Address (Optional)",
+                    labelText: "Secondary Address",
                     border: OutlineInputBorder(
                       borderRadius: BorderRadius.circular(15),
                     ),
-                    prefixIcon: const Icon(Icons.location_on_outlined),
+                    prefixIcon: const Icon(Icons.add_location_outlined),
                   ),
                   validator: (value) {
                     if (value == null || value.trim().isEmpty) {
@@ -240,6 +260,13 @@ class _CreateCustomerScreenState extends ConsumerState<CreateCustomerScreen> {
     _emailController.dispose();
     _addressController.dispose();
     _secondaryAddressController.dispose();
+
+    _nameFocus.dispose();
+    _phoneFocus.dispose();
+    _emailFocus.dispose();
+    _addressFocus.dispose();
+    _secaddressFocus.dispose();
+
     super.dispose();
   }
 }
