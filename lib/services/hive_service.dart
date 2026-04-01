@@ -17,7 +17,7 @@ class HiveService {
 
   //update Method
   Future<void> updateCustomer(int index, Customer custupdt) async {
-    await _customerBox.putAt(index, custupdt); //map style
+    await _customerBox.putAt(index, custupdt); //map style (ID value pair)
   }
 
   //deletee Method
