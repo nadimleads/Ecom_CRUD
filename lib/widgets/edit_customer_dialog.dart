@@ -21,11 +21,11 @@ class EditCustomerDialog extends ConsumerStatefulWidget {
 class _EditCustomerDialogState extends ConsumerState<EditCustomerDialog> {
   //Putting this Inside This private Class
   final _formKey = GlobalKey<FormState>();
-  late TextEditingController _nameController;
-  late TextEditingController _phoneController;
-  late TextEditingController _emialController;
-  late TextEditingController _addressController;
-  late TextEditingController _secondaryaddressController;
+  late final TextEditingController _nameController;
+  late final TextEditingController _phoneController;
+  late final TextEditingController _emialController;
+  late final TextEditingController _addressController;
+  late final TextEditingController _secondaryaddressController;
 
   //prefilled thakar jonno initState use kora holo
   @override
