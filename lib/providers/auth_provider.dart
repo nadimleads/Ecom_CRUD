@@ -13,6 +13,7 @@ class AuthNotifier extends StateNotifier<bool> {
     final value = await storage.getAuthStatus(); // TEMP reuse key
 
     if (value == "loggedIn") {
+      // trigger 3 things
       state = true;
     } else {
       state = false;
