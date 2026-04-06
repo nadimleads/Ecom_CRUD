@@ -1,6 +1,7 @@
-import 'package:ecoms/providers/theme_provider.dart';
 import 'package:ecoms/services/secure_storage_service.dart';
 import 'package:flutter_riverpod/legacy.dart';
+
+import 'secure_storage_provider.dart';
 
 class AuthNotifier extends StateNotifier<bool> {
   final SecureStorageService storage;

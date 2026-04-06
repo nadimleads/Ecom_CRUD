@@ -1,7 +1,8 @@
-import 'package:flutter/material.dart';
-import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:flutter_riverpod/legacy.dart';
 import 'package:ecoms/services/secure_storage_service.dart';
+import 'package:flutter/material.dart';
+import 'package:flutter_riverpod/legacy.dart';
+
+import 'secure_storage_provider.dart';
 
 //theme notifier is a statecontroller
 // so this notifier manages ThemeMode state
@@ -32,11 +33,6 @@ class ThemeNotifier extends StateNotifier<ThemeMode> {
     }
   }
 }
-
-//bridge of storage with Riverpod to manage
-final secureStorageProvider = Provider((ref) {
-  return SecureStorageService();
-});
 
 //bidge of theme with Riverpod provide je kore
 final themeProvider = StateNotifierProvider<ThemeNotifier, ThemeMode>((ref) {
