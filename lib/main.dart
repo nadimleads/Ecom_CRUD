@@ -1,9 +1,12 @@
-import 'package:ecoms/router/app_router.dart';
 import 'package:ecoms/model/customer_model.dart';
+import 'package:ecoms/providers/app_router.dart';
 import 'package:ecoms/providers/theme_provider.dart';
+import 'package:ecoms/utils/theme/light_theme.dart';
 import 'package:flutter/material.dart';
-import 'package:hive_flutter/hive_flutter.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:hive_flutter/hive_flutter.dart';
+
+import 'utils/theme/dark_theme.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
@@ -30,14 +33,8 @@ class TheApp extends ConsumerWidget {
       routerConfig: router, // use this router
       debugShowCheckedModeBanner: false,
       title: 'Ecom CRUD Learning',
-
-      theme: ThemeData(
-        brightness: Brightness.light,
-        primarySwatch: Colors.blue,
-      ),
-
-      darkTheme: ThemeData(brightness: Brightness.dark),
-
+      theme: lightTheme,
+      darkTheme: darkTheme,
       themeMode: themeMode,
     );
   }

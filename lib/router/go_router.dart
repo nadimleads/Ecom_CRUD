@@ -1,13 +1,9 @@
-import 'package:ecoms/screens/login_screen.dart';
-import 'package:ecoms/screens/home_screen.dart';
 import 'package:ecoms/screens/create_customer_screen.dart';
-import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:ecoms/screens/home_sceen/home_screen.dart';
+import 'package:ecoms/screens/login_screen.dart';
 import 'package:go_router/go_router.dart';
-import 'package:ecoms/providers/auth_provider.dart';
 
-final appRouterProvider = Provider<GoRouter>((ref) {
-  final isLoggedIn = ref.watch(authProvider);
-
+GoRouter createRouter(bool isLoggedIn) {
   return GoRouter(
     initialLocation: '/',
     redirect: (context, state) {
@@ -36,4 +32,4 @@ final appRouterProvider = Provider<GoRouter>((ref) {
       ),
     ],
   );
-});
+}

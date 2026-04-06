@@ -1,11 +1,12 @@
 // import 'package:ecoms/model/customer_model.dart';
 import 'package:ecoms/providers/auth_provider.dart';
+import 'package:ecoms/providers/customer_provider.dart';
 import 'package:ecoms/providers/theme_provider.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
-import 'package:ecoms/providers/customer_provider.dart';
-import 'package:ecoms/widgets/customer_card.dart';
+
+import 'widgets/customer_card.dart';
 
 class HomeScreen extends ConsumerStatefulWidget {
   const HomeScreen({super.key});
@@ -30,7 +31,6 @@ class _HomeScreenState extends ConsumerState<HomeScreen> {
         ),
         centerTitle: true,
         actions: [
-          //ThemeProvider based work
           Padding(
             padding: const EdgeInsets.only(right: 05),
             child: IconButton(
@@ -44,7 +44,6 @@ class _HomeScreenState extends ConsumerState<HomeScreen> {
               ),
             ),
           ),
-          // Logout button
           IconButton(
             icon: const Icon(Icons.logout),
             onPressed: () {
@@ -56,7 +55,6 @@ class _HomeScreenState extends ConsumerState<HomeScreen> {
       backgroundColor: Theme.of(context).colorScheme.surface,
       body: Column(
         children: [
-          //Add Customer button
           Padding(
             padding: const EdgeInsets.all(15.0),
             child: ElevatedButton.icon(
@@ -72,7 +70,6 @@ class _HomeScreenState extends ConsumerState<HomeScreen> {
             ),
           ),
 
-          //customer list er jonno (for Read/get operation)
           Expanded(
             child:
                 customers.isEmpty
@@ -85,7 +82,7 @@ class _HomeScreenState extends ConsumerState<HomeScreen> {
                     : ListView.builder(
                       itemCount: customers.length,
                       itemBuilder: (
-                        ctx,
+                        context,
                         index,
                       ) //bujhinai ei itembuilder er part ta
                       {

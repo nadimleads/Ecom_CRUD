@@ -1,9 +1,9 @@
 import 'package:ecoms/model/customer_model.dart';
-import 'package:ecoms/widgets/edit_customer_dialog.dart';
-import 'package:flutter/material.dart';
-
-import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:ecoms/providers/customer_provider.dart';
+import 'package:flutter/material.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
+
+import 'edit_customer_dialog.dart';
 
 //full clear na
 class CustomerCard extends ConsumerWidget {
