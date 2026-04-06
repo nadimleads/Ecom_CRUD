@@ -1,5 +1,5 @@
 import 'package:ecoms/model/customer_model.dart';
-import 'package:ecoms/providers/app_router.dart';
+import 'package:ecoms/providers/app_router_provider.dart';
 import 'package:ecoms/providers/theme_provider.dart';
 import 'package:ecoms/utils/theme/light_theme.dart';
 import 'package:flutter/material.dart';
