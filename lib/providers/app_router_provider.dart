@@ -3,7 +3,7 @@ import 'package:ecoms/router/go_router.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
 
-final appRouterProvider = Provider<GoRouter>((ref) {
-  final isLoggedIn = ref.watch(authProvider);
+final appRouterProvider = Provider<GoRouter>((whatever) {
+  final isLoggedIn = whatever.watch(authProvider);
   return createRouter(isLoggedIn);
 });

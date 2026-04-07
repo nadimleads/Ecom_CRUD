@@ -26,15 +26,16 @@ class TheApp extends ConsumerWidget {
   Widget build(BuildContext context, WidgetRef ref) {
     final themeMode = ref.watch(themeProvider);
 
-    // ✅ FIXED THE SPELLING
     final router = ref.watch(appRouterProvider);
 
     return MaterialApp.router(
       routerConfig: router, // use this router
       debugShowCheckedModeBanner: false,
       title: 'Ecom CRUD Learning',
+      //This 'theme' and 'darktheme' is for controlling the coloring
       theme: lightTheme,
       darkTheme: darkTheme,
+      //this part is for tracking the checking
       themeMode: themeMode,
     );
   }
