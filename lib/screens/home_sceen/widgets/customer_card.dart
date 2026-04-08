@@ -41,6 +41,10 @@ class CustomerCard extends ConsumerWidget {
                 // email
                 Text("Email: ${customer.email}"),
                 const SizedBox(height: 4),
+                //Gender
+                Text("Gender: ${customer.gender.name}"),
+                const SizedBox(height: 4),
+
                 // Address
                 Text("Address: ${customer.address}"),
                 const SizedBox(height: 4),

@@ -1,3 +1,4 @@
+import 'package:ecoms/model/gender_model.dart';
 import 'package:ecoms/providers/customer_provider.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
@@ -20,12 +21,14 @@ class _CreateCustomerScreenState extends ConsumerState<CreateCustomerScreen> {
   final _emailController = TextEditingController(); // Fixed spelling
   final _addressController = TextEditingController();
   final _secondaryAddressController = TextEditingController(); // Better name
+  GenderModel _selectedGender = GenderModel.male;
 
   final _nameFocus = FocusNode();
   final _phoneFocus = FocusNode();
   final _emailFocus = FocusNode();
   final _addressFocus = FocusNode();
   final _secaddressFocus = FocusNode();
+  // final GenderModel _genderFocus = GenderModel.male;
 
   // This is the key for real-time validation
   bool _autoValidate = false;
@@ -204,6 +207,43 @@ class _CreateCustomerScreenState extends ConsumerState<CreateCustomerScreen> {
 
                 const SizedBox(height: 30),
 
+                Text("Gender", style: TextStyle(fontWeight: FontWeight.bold)),
+
+                RadioListTile<GenderModel>(
+                  title: const Text("Male"),
+                  value: GenderModel.male,
+                  groupValue: _selectedGender,
+                  onChanged: (value) {
+                    setState(() {
+                      _selectedGender = value!;
+                    });
+                  },
+                ),
+
+                RadioListTile<GenderModel>(
+                  title: const Text("Female"),
+                  value: GenderModel.female,
+                  groupValue: _selectedGender,
+                  onChanged: (value) {
+                    setState(() {
+                      _selectedGender = value!;
+                    });
+                  },
+                ),
+
+                RadioListTile<GenderModel>(
+                  title: const Text("Other"),
+                  value: GenderModel.other,
+                  groupValue: _selectedGender,
+                  onChanged: (value) {
+                    setState(() {
+                      _selectedGender = value!;
+                    });
+                  },
+                ),
+
+                const SizedBox(height: 30),
+
                 // Save Button
                 SizedBox(
                   width: double.infinity,
@@ -227,6 +267,7 @@ class _CreateCustomerScreenState extends ConsumerState<CreateCustomerScreen> {
                           address: _addressController.text.trim(),
                           secondaryAddress:
                               _secondaryAddressController.text.trim(),
+                          gender: _selectedGender, // Added newly
                         );
 
                         ref

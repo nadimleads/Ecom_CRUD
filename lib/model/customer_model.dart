@@ -1,3 +1,4 @@
+import 'package:ecoms/model/gender_model.dart';
 import 'package:hive/hive.dart';
 part 'customer_model.g.dart';
 
@@ -10,6 +11,7 @@ class Customer {
     required this.email,
     required this.address,
     required this.secondaryAddress,
+    required this.gender,
   });
 
   @HiveField(0)
@@ -26,4 +28,7 @@ class Customer {
 
   @HiveField(4)
   String secondaryAddress;
+
+  @HiveField(5)
+  GenderModel gender;
 }

@@ -1,4 +1,5 @@
 import 'package:ecoms/model/customer_model.dart';
+import 'package:ecoms/model/gender_model.dart';
 import 'package:ecoms/providers/app_router_provider.dart';
 import 'package:ecoms/providers/theme_provider.dart';
 import 'package:ecoms/utils/theme/light_theme.dart';
@@ -13,6 +14,7 @@ void main() async {
 
   await Hive.initFlutter();
   Hive.registerAdapter(CustomerAdapter());
+  Hive.registerAdapter(GenderModelAdapter());
 
   await Hive.openBox<Customer>('customers');
 
@@ -31,7 +33,7 @@ class TheApp extends ConsumerWidget {
     return MaterialApp.router(
       routerConfig: router, // use this router
       debugShowCheckedModeBanner: false,
-      title: 'Ecom CRUD Learning',
+      title: 'Ecom CRUD Learning Project',
       //This 'theme' and 'darktheme' is for controlling the coloring
       theme: lightTheme,
       darkTheme: darkTheme,

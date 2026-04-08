@@ -1,4 +1,5 @@
 import 'package:ecoms/model/customer_model.dart';
+import 'package:ecoms/model/gender_model.dart';
 import 'package:ecoms/providers/customer_provider.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
@@ -26,6 +27,7 @@ class _EditCustomerDialogState extends ConsumerState<EditCustomerDialog> {
   late final TextEditingController _emialController;
   late final TextEditingController _addressController;
   late final TextEditingController _secondaryaddressController;
+  late GenderModel _selectedGender;
 
   //prefilled thakar jonno initState use kora holo
   @override
@@ -33,6 +35,7 @@ class _EditCustomerDialogState extends ConsumerState<EditCustomerDialog> {
     super.initState();
 
     _nameController = TextEditingController(text: widget.customer.name);
+
     _phoneController = TextEditingController(
       text: widget.customer.phone.replaceFirst("+88", ""),
     );
@@ -41,6 +44,7 @@ class _EditCustomerDialogState extends ConsumerState<EditCustomerDialog> {
     _secondaryaddressController = TextEditingController(
       text: widget.customer.secondaryAddress,
     );
+    _selectedGender = widget.customer.gender;
   }
 
   bool _autovalidation = false;
@@ -198,6 +202,42 @@ class _EditCustomerDialogState extends ConsumerState<EditCustomerDialog> {
               ),
 
               const SizedBox(height: 25),
+              Text("Gender", style: TextStyle(fontWeight: FontWeight.bold)),
+
+              RadioListTile<GenderModel>(
+                title: const Text("Male"),
+                value: GenderModel.male,
+                groupValue: _selectedGender,
+                onChanged: (value) {
+                  setState(() {
+                    _selectedGender = value!;
+                  });
+                },
+              ),
+
+              RadioListTile<GenderModel>(
+                title: const Text("Female"),
+                value: GenderModel.female,
+                groupValue: _selectedGender,
+                onChanged: (value) {
+                  setState(() {
+                    _selectedGender = value!;
+                  });
+                },
+              ),
+
+              RadioListTile<GenderModel>(
+                title: const Text("Other"),
+                value: GenderModel.other,
+                groupValue: _selectedGender,
+                onChanged: (value) {
+                  setState(() {
+                    _selectedGender = value!;
+                  });
+                },
+              ),
+
+              const SizedBox(height: 25),
 
               /// Save Button
               SizedBox(
@@ -219,6 +259,7 @@ class _EditCustomerDialogState extends ConsumerState<EditCustomerDialog> {
                         email: _emialController.text,
                         address: _addressController.text,
                         secondaryAddress: _secondaryaddressController.text,
+                        gender: _selectedGender,
                       );
 
                       ref
