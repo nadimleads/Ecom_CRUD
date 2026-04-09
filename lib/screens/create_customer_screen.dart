@@ -18,9 +18,9 @@ class _CreateCustomerScreenState extends ConsumerState<CreateCustomerScreen> {
 
   final _nameController = TextEditingController();
   final _phoneController = TextEditingController();
-  final _emailController = TextEditingController(); // Fixed spelling
+  final _emailController = TextEditingController();
   final _addressController = TextEditingController();
-  final _secondaryAddressController = TextEditingController(); // Better name
+  final _secondaryAddressController = TextEditingController();
   GenderModel _selectedGender = GenderModel.male;
 
   final _nameFocus = FocusNode();
@@ -207,39 +207,42 @@ class _CreateCustomerScreenState extends ConsumerState<CreateCustomerScreen> {
 
                 const SizedBox(height: 30),
 
-                Text("Gender", style: TextStyle(fontWeight: FontWeight.bold)),
-
-                RadioListTile<GenderModel>(
-                  title: const Text("Male"),
-                  value: GenderModel.male,
+                RadioGroup<GenderModel>(
                   groupValue: _selectedGender,
+                  // onChanged Updates
                   onChanged: (value) {
                     setState(() {
                       _selectedGender = value!;
                     });
                   },
-                ),
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      const Text(
+                        "Gender",
+                        style: TextStyle(
+                          fontWeight: FontWeight.bold,
+                          fontSize: 16,
+                        ),
+                      ),
+                      const SizedBox(height: 8),
 
-                RadioListTile<GenderModel>(
-                  title: const Text("Female"),
-                  value: GenderModel.female,
-                  groupValue: _selectedGender,
-                  onChanged: (value) {
-                    setState(() {
-                      _selectedGender = value!;
-                    });
-                  },
-                ),
+                      RadioListTile<GenderModel>(
+                        title: const Text("Male"),
+                        value: GenderModel.male,
+                      ),
 
-                RadioListTile<GenderModel>(
-                  title: const Text("Other"),
-                  value: GenderModel.other,
-                  groupValue: _selectedGender,
-                  onChanged: (value) {
-                    setState(() {
-                      _selectedGender = value!;
-                    });
-                  },
+                      RadioListTile<GenderModel>(
+                        title: const Text("Female"),
+                        value: GenderModel.female,
+                      ),
+
+                      RadioListTile<GenderModel>(
+                        title: const Text("Other"),
+                        value: GenderModel.other,
+                      ),
+                    ],
+                  ),
                 ),
 
                 const SizedBox(height: 30),

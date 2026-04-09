@@ -202,39 +202,43 @@ class _EditCustomerDialogState extends ConsumerState<EditCustomerDialog> {
               ),
 
               const SizedBox(height: 25),
-              Text("Gender", style: TextStyle(fontWeight: FontWeight.bold)),
 
-              RadioListTile<GenderModel>(
-                title: const Text("Male"),
-                value: GenderModel.male,
+              RadioGroup<GenderModel>(
                 groupValue: _selectedGender,
+                // onChanged Updates
                 onChanged: (value) {
                   setState(() {
                     _selectedGender = value!;
                   });
                 },
-              ),
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    const Text(
+                      "Gender",
+                      style: TextStyle(
+                        fontWeight: FontWeight.bold,
+                        fontSize: 16,
+                      ),
+                    ),
+                    const SizedBox(height: 8),
 
-              RadioListTile<GenderModel>(
-                title: const Text("Female"),
-                value: GenderModel.female,
-                groupValue: _selectedGender,
-                onChanged: (value) {
-                  setState(() {
-                    _selectedGender = value!;
-                  });
-                },
-              ),
+                    RadioListTile<GenderModel>(
+                      title: const Text("Male"),
+                      value: GenderModel.male,
+                    ),
 
-              RadioListTile<GenderModel>(
-                title: const Text("Other"),
-                value: GenderModel.other,
-                groupValue: _selectedGender,
-                onChanged: (value) {
-                  setState(() {
-                    _selectedGender = value!;
-                  });
-                },
+                    RadioListTile<GenderModel>(
+                      title: const Text("Female"),
+                      value: GenderModel.female,
+                    ),
+
+                    RadioListTile<GenderModel>(
+                      title: const Text("Other"),
+                      value: GenderModel.other,
+                    ),
+                  ],
+                ),
               ),
 
               const SizedBox(height: 25),
