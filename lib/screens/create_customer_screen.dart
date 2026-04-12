@@ -1,5 +1,8 @@
+import 'package:country_picker/country_picker.dart';
+import 'package:ecoms/model/blood_group_model.dart';
 import 'package:ecoms/model/gender_model.dart';
 import 'package:ecoms/providers/customer_provider.dart';
+import 'package:ecoms/utils/blood_group.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
@@ -22,6 +25,19 @@ class _CreateCustomerScreenState extends ConsumerState<CreateCustomerScreen> {
   final _addressController = TextEditingController();
   final _secondaryAddressController = TextEditingController();
   GenderModel _selectedGender = GenderModel.male;
+  BloodGroupModel _selectedBloodGroup = BloodGroupModel.O_POS;
+  Country _selectedCountry = Country(
+    phoneCode: "880",
+    countryCode: "BD",
+    e164Sc: 880,
+    geographic: true,
+    level: 1,
+    name: "Bangladesh",
+    displayName: "Bangladesh",
+    displayNameNoCountryCode: "Bangladesh",
+    e164Key: "880-BD",
+    example: '',
+  );
 
   final _nameFocus = FocusNode();
   final _phoneFocus = FocusNode();
@@ -207,6 +223,96 @@ class _CreateCustomerScreenState extends ConsumerState<CreateCustomerScreen> {
 
                 const SizedBox(height: 30),
 
+                // ==================== COUNTRY PICKER ====================
+                ListTile(
+                  contentPadding: const EdgeInsets.symmetric(horizontal: 12),
+                  title: const Text(
+                    "Country",
+                    style: TextStyle(fontWeight: FontWeight.bold),
+                  ),
+                  subtitle: Text(
+                    _selectedCountry.displayName,
+                    style: const TextStyle(fontSize: 16),
+                  ),
+                  leading: Text(
+                    _selectedCountry.flagEmoji,
+                    style: const TextStyle(fontSize: 28),
+                  ),
+                  shape: RoundedRectangleBorder(
+                    borderRadius: BorderRadius.circular(15),
+                  ),
+                  tileColor: Theme.of(context).cardColor,
+                  onTap: () {
+                    showCountryPicker(
+                      context: context,
+                      showPhoneCode: false,
+                      favorite: ['BD', 'US', 'GB', 'IN'],
+                      countryListTheme: CountryListThemeData(
+                        borderRadius: BorderRadius.circular(12),
+                        inputDecoration: InputDecoration(
+                          labelText: "Search Country",
+                          prefixIcon: const Icon(Icons.search),
+                          border: OutlineInputBorder(
+                            borderRadius: BorderRadius.circular(12),
+                          ),
+                        ),
+                      ),
+                      onSelect: (Country country) {
+                        setState(() {
+                          _selectedCountry = country;
+                        });
+                      },
+                    );
+                  },
+                ),
+
+                const SizedBox(height: 30),
+                //Gender
+                DropdownButtonFormField<BloodGroupModel>(
+                  initialValue: _selectedBloodGroup,
+                  isDense: true,
+                  icon: const Icon(
+                    Icons.arrow_drop_down,
+                    size: 20,
+                  ), // smaller arrow
+                  decoration: InputDecoration(
+                    labelText: "Blood Group",
+                    isDense: true,
+                    contentPadding: const EdgeInsets.symmetric(
+                      vertical: 10, // 🔥 tighter vertical space
+                      horizontal: 10,
+                    ),
+                    prefixIcon: const Padding(
+                      padding: EdgeInsets.only(left: 8, right: 6),
+                      child: Icon(Icons.bloodtype, size: 20),
+                    ),
+                    prefixIconConstraints: const BoxConstraints(
+                      minWidth: 30,
+                      minHeight: 30,
+                    ),
+                    border: OutlineInputBorder(
+                      borderRadius: BorderRadius.circular(15),
+                    ),
+                  ),
+                  items:
+                      BloodGroupModel.values.map((bg) {
+                        return DropdownMenuItem(
+                          value: bg,
+                          child: Text(
+                            formatBloodGroup(bg),
+                            style: const TextStyle(fontSize: 14),
+                          ),
+                        );
+                      }).toList(),
+                  onChanged: (value) {
+                    setState(() {
+                      _selectedBloodGroup = value!;
+                    });
+                  },
+                ),
+
+                const SizedBox(height: 30),
+
                 RadioGroup<GenderModel>(
                   groupValue: _selectedGender,
                   // onChanged Updates
@@ -270,13 +376,15 @@ class _CreateCustomerScreenState extends ConsumerState<CreateCustomerScreen> {
                           address: _addressController.text.trim(),
                           secondaryAddress:
                               _secondaryAddressController.text.trim(),
-                          gender: _selectedGender, // Added newly
+                          gender: _selectedGender,
+                          bloodgroup: _selectedBloodGroup,
+                          country: _selectedCountry,
                         );
 
                         ref
                             .read(customerProvider.notifier)
                             .addCustomer(newCustomer);
-                        context.pop();
+                        context.go('/'); // Stack issue Fix (Simple way)
                       }
                     },
                     child: const Text(

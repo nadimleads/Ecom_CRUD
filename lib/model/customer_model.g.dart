@@ -23,13 +23,15 @@ class CustomerAdapter extends TypeAdapter<Customer> {
       address: fields[3] as String,
       secondaryAddress: fields[4] as String,
       gender: fields[5] as GenderModel,
+      bloodgroup: fields[6] as BloodGroupModel,
+      country: fields[7] as Country,
     );
   }
 
   @override
   void write(BinaryWriter writer, Customer obj) {
     writer
-      ..writeByte(6)
+      ..writeByte(8)
       ..writeByte(0)
       ..write(obj.name)
       ..writeByte(1)
@@ -41,7 +43,11 @@ class CustomerAdapter extends TypeAdapter<Customer> {
       ..writeByte(4)
       ..write(obj.secondaryAddress)
       ..writeByte(5)
-      ..write(obj.gender);
+      ..write(obj.gender)
+      ..writeByte(6)
+      ..write(obj.bloodgroup)
+      ..writeByte(7)
+      ..write(obj.country);
   }
 
   @override

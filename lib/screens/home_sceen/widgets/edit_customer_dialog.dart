@@ -1,6 +1,9 @@
+import 'package:country_picker/country_picker.dart';
+import 'package:ecoms/model/blood_group_model.dart';
 import 'package:ecoms/model/customer_model.dart';
 import 'package:ecoms/model/gender_model.dart';
 import 'package:ecoms/providers/customer_provider.dart';
+import 'package:ecoms/utils/blood_group.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
@@ -28,6 +31,8 @@ class _EditCustomerDialogState extends ConsumerState<EditCustomerDialog> {
   late final TextEditingController _addressController;
   late final TextEditingController _secondaryaddressController;
   late GenderModel _selectedGender;
+  late BloodGroupModel _selectedBloodGroup;
+  late Country _selectedCountry;
 
   //prefilled thakar jonno initState use kora holo
   @override
@@ -45,6 +50,8 @@ class _EditCustomerDialogState extends ConsumerState<EditCustomerDialog> {
       text: widget.customer.secondaryAddress,
     );
     _selectedGender = widget.customer.gender;
+    _selectedBloodGroup = widget.customer.bloodgroup;
+    _selectedCountry = widget.customer.country;
   }
 
   bool _autovalidation = false;
@@ -203,6 +210,77 @@ class _EditCustomerDialogState extends ConsumerState<EditCustomerDialog> {
 
               const SizedBox(height: 25),
 
+              // ==================== COUNTRY PICKER ====================
+              ListTile(
+                contentPadding: const EdgeInsets.symmetric(horizontal: 8),
+                title: const Text(
+                  "Country",
+                  style: TextStyle(fontWeight: FontWeight.bold),
+                ),
+                subtitle: Text(
+                  _selectedCountry.displayName,
+                  style: const TextStyle(fontSize: 16),
+                ),
+                leading: Text(
+                  _selectedCountry.flagEmoji,
+                  style: const TextStyle(fontSize: 28),
+                ),
+                shape: RoundedRectangleBorder(
+                  borderRadius: BorderRadius.circular(12),
+                ),
+                tileColor: Theme.of(context).cardColor,
+                onTap: () {
+                  showCountryPicker(
+                    context: context,
+                    showPhoneCode: false,
+                    favorite: ['BD', 'US', 'GB', 'IN'],
+                    countryListTheme: CountryListThemeData(
+                      borderRadius: BorderRadius.circular(12),
+                      inputDecoration: InputDecoration(
+                        labelText: "Search Country",
+                        prefixIcon: const Icon(Icons.search),
+                        border: OutlineInputBorder(
+                          borderRadius: BorderRadius.circular(12),
+                        ),
+                      ),
+                    ),
+                    onSelect: (Country country) {
+                      setState(() {
+                        _selectedCountry = country;
+                      });
+                    },
+                  );
+                },
+              ),
+
+              const SizedBox(height: 25),
+
+              //Gender
+              DropdownButtonFormField<BloodGroupModel>(
+                initialValue: _selectedBloodGroup,
+                decoration: InputDecoration(
+                  labelText: "Blood Group",
+                  border: OutlineInputBorder(
+                    borderRadius: BorderRadius.circular(15),
+                  ),
+                  prefixIcon: Icon(Icons.bloodtype),
+                ),
+                items:
+                    BloodGroupModel.values.map((bg) {
+                      return DropdownMenuItem(
+                        value: bg,
+                        child: Text(formatBloodGroup(bg)), // ✅ HERE
+                      );
+                    }).toList(),
+                onChanged: (value) {
+                  setState(() {
+                    _selectedBloodGroup = value!;
+                  });
+                },
+              ),
+
+              const SizedBox(height: 25),
+
               RadioGroup<GenderModel>(
                 groupValue: _selectedGender,
                 // onChanged Updates
@@ -264,6 +342,8 @@ class _EditCustomerDialogState extends ConsumerState<EditCustomerDialog> {
                         address: _addressController.text,
                         secondaryAddress: _secondaryaddressController.text,
                         gender: _selectedGender,
+                        bloodgroup: _selectedBloodGroup,
+                        country: _selectedCountry,
                       );
 
                       ref

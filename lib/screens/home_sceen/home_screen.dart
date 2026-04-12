@@ -59,7 +59,7 @@ class _HomeScreenState extends ConsumerState<HomeScreen> {
             padding: const EdgeInsets.all(15.0),
             child: ElevatedButton.icon(
               onPressed: () {
-                context.push('/create-customer');
+                context.go('/create-customer'); // Stack issue Fix (Simple way)
               },
               icon: const Icon(Icons.add),
               label: const Text('Create New Customer'),

@@ -2,7 +2,7 @@ import 'package:ecoms/model/customer_model.dart';
 import 'package:ecoms/providers/customer_provider.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-
+import 'package:ecoms/utils/blood_group.dart';
 import 'edit_customer_dialog.dart';
 
 //full clear na
@@ -41,10 +41,28 @@ class CustomerCard extends ConsumerWidget {
                 // email
                 Text("Email: ${customer.email}"),
                 const SizedBox(height: 4),
+
+                //Country
+                Row(
+                  children: [
+                    Text(
+                      customer.country.flagEmoji,
+                      style: const TextStyle(fontSize: 20),
+                    ),
+                    const SizedBox(width: 8),
+                    Text(
+                      customer.country.displayName,
+                      style: const TextStyle(fontSize: 16),
+                    ),
+                  ],
+                ),
+                const SizedBox(height: 4),
+
+                //blood
+                Text("Blood Group: ${formatBloodGroup(customer.bloodgroup)}"),
                 //Gender
                 Text("Gender: ${customer.gender.name}"),
                 const SizedBox(height: 4),
-
                 // Address
                 Text("Address: ${customer.address}"),
                 const SizedBox(height: 4),
