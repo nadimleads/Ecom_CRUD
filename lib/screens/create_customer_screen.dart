@@ -1,4 +1,3 @@
-import 'package:country_picker/country_picker.dart';
 import 'package:ecoms/model/blood_group_model.dart';
 import 'package:ecoms/model/gender_model.dart';
 import 'package:ecoms/providers/customer_provider.dart';
@@ -26,18 +25,6 @@ class _CreateCustomerScreenState extends ConsumerState<CreateCustomerScreen> {
   final _secondaryAddressController = TextEditingController();
   GenderModel _selectedGender = GenderModel.male;
   BloodGroupModel _selectedBloodGroup = BloodGroupModel.O_POS;
-  Country _selectedCountry = Country(
-    phoneCode: "880",
-    countryCode: "BD",
-    e164Sc: 880,
-    geographic: true,
-    level: 1,
-    name: "Bangladesh",
-    displayName: "Bangladesh",
-    displayNameNoCountryCode: "Bangladesh",
-    e164Key: "880-BD",
-    example: '',
-  );
 
   final _nameFocus = FocusNode();
   final _phoneFocus = FocusNode();
@@ -223,49 +210,6 @@ class _CreateCustomerScreenState extends ConsumerState<CreateCustomerScreen> {
 
                 const SizedBox(height: 30),
 
-                // ==================== COUNTRY PICKER ====================
-                ListTile(
-                  contentPadding: const EdgeInsets.symmetric(horizontal: 12),
-                  title: const Text(
-                    "Country",
-                    style: TextStyle(fontWeight: FontWeight.bold),
-                  ),
-                  subtitle: Text(
-                    _selectedCountry.displayName,
-                    style: const TextStyle(fontSize: 16),
-                  ),
-                  leading: Text(
-                    _selectedCountry.flagEmoji,
-                    style: const TextStyle(fontSize: 28),
-                  ),
-                  shape: RoundedRectangleBorder(
-                    borderRadius: BorderRadius.circular(15),
-                  ),
-                  tileColor: Theme.of(context).cardColor,
-                  onTap: () {
-                    showCountryPicker(
-                      context: context,
-                      showPhoneCode: false,
-                      favorite: ['BD', 'US', 'GB', 'IN'],
-                      countryListTheme: CountryListThemeData(
-                        borderRadius: BorderRadius.circular(12),
-                        inputDecoration: InputDecoration(
-                          labelText: "Search Country",
-                          prefixIcon: const Icon(Icons.search),
-                          border: OutlineInputBorder(
-                            borderRadius: BorderRadius.circular(12),
-                          ),
-                        ),
-                      ),
-                      onSelect: (Country country) {
-                        setState(() {
-                          _selectedCountry = country;
-                        });
-                      },
-                    );
-                  },
-                ),
-
                 const SizedBox(height: 30),
                 //Gender
                 DropdownButtonFormField<BloodGroupModel>(
@@ -378,7 +322,6 @@ class _CreateCustomerScreenState extends ConsumerState<CreateCustomerScreen> {
                               _secondaryAddressController.text.trim(),
                           gender: _selectedGender,
                           bloodgroup: _selectedBloodGroup,
-                          country: _selectedCountry,
                         );
 
                         ref

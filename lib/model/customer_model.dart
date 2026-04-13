@@ -1,4 +1,3 @@
-import 'package:country_picker/country_picker.dart';
 import 'package:ecoms/model/blood_group_model.dart';
 import 'package:ecoms/model/gender_model.dart';
 import 'package:hive/hive.dart';
@@ -27,9 +26,6 @@ class Customer {
   @HiveField(6)
   BloodGroupModel bloodgroup;
 
-  @HiveField(7)
-  Country country;
-
   // Generative Constructor using Named Parameters.
   Customer({
     required this.name,
@@ -39,6 +35,5 @@ class Customer {
     required this.secondaryAddress,
     required this.gender,
     required this.bloodgroup,
-    required this.country,
   });
 }

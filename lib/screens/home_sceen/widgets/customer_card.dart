@@ -42,20 +42,6 @@ class CustomerCard extends ConsumerWidget {
                 Text("Email: ${customer.email}"),
                 const SizedBox(height: 4),
 
-                //Country
-                Row(
-                  children: [
-                    Text(
-                      customer.country.flagEmoji,
-                      style: const TextStyle(fontSize: 20),
-                    ),
-                    const SizedBox(width: 8),
-                    Text(
-                      customer.country.displayName,
-                      style: const TextStyle(fontSize: 16),
-                    ),
-                  ],
-                ),
                 const SizedBox(height: 4),
 
                 //blood

@@ -1,4 +1,3 @@
-import 'package:country_picker/country_picker.dart';
 import 'package:ecoms/model/blood_group_model.dart';
 import 'package:ecoms/model/customer_model.dart';
 import 'package:ecoms/model/gender_model.dart';
@@ -32,7 +31,6 @@ class _EditCustomerDialogState extends ConsumerState<EditCustomerDialog> {
   late final TextEditingController _secondaryaddressController;
   late GenderModel _selectedGender;
   late BloodGroupModel _selectedBloodGroup;
-  late Country _selectedCountry;
 
   //prefilled thakar jonno initState use kora holo
   @override
@@ -51,7 +49,6 @@ class _EditCustomerDialogState extends ConsumerState<EditCustomerDialog> {
     );
     _selectedGender = widget.customer.gender;
     _selectedBloodGroup = widget.customer.bloodgroup;
-    _selectedCountry = widget.customer.country;
   }
 
   bool _autovalidation = false;
@@ -210,49 +207,6 @@ class _EditCustomerDialogState extends ConsumerState<EditCustomerDialog> {
 
               const SizedBox(height: 25),
 
-              // ==================== COUNTRY PICKER ====================
-              ListTile(
-                contentPadding: const EdgeInsets.symmetric(horizontal: 8),
-                title: const Text(
-                  "Country",
-                  style: TextStyle(fontWeight: FontWeight.bold),
-                ),
-                subtitle: Text(
-                  _selectedCountry.displayName,
-                  style: const TextStyle(fontSize: 16),
-                ),
-                leading: Text(
-                  _selectedCountry.flagEmoji,
-                  style: const TextStyle(fontSize: 28),
-                ),
-                shape: RoundedRectangleBorder(
-                  borderRadius: BorderRadius.circular(12),
-                ),
-                tileColor: Theme.of(context).cardColor,
-                onTap: () {
-                  showCountryPicker(
-                    context: context,
-                    showPhoneCode: false,
-                    favorite: ['BD', 'US', 'GB', 'IN'],
-                    countryListTheme: CountryListThemeData(
-                      borderRadius: BorderRadius.circular(12),
-                      inputDecoration: InputDecoration(
-                        labelText: "Search Country",
-                        prefixIcon: const Icon(Icons.search),
-                        border: OutlineInputBorder(
-                          borderRadius: BorderRadius.circular(12),
-                        ),
-                      ),
-                    ),
-                    onSelect: (Country country) {
-                      setState(() {
-                        _selectedCountry = country;
-                      });
-                    },
-                  );
-                },
-              ),
-
               const SizedBox(height: 25),
 
               //Gender
@@ -343,7 +297,6 @@ class _EditCustomerDialogState extends ConsumerState<EditCustomerDialog> {
                         secondaryAddress: _secondaryaddressController.text,
                         gender: _selectedGender,
                         bloodgroup: _selectedBloodGroup,
-                        country: _selectedCountry,
                       );
 
                       ref

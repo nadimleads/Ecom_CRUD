@@ -1,5 +1,4 @@
 import 'package:ecoms/model/blood_group_model.dart';
-import 'package:ecoms/model/country_adapter.dart';
 import 'package:ecoms/model/customer_model.dart';
 import 'package:ecoms/model/gender_model.dart';
 import 'package:ecoms/providers/app_router_provider.dart';
@@ -20,7 +19,6 @@ void main() async {
   Hive.registerAdapter(CustomerAdapter());
   Hive.registerAdapter(GenderModelAdapter());
   Hive.registerAdapter(BloodGroupModelAdapter());
-  Hive.registerAdapter(CountryAdapter());
 
   await Hive.openBox<Customer>('customers');
 
