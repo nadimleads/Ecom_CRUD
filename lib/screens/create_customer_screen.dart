@@ -210,8 +210,7 @@ class _CreateCustomerScreenState extends ConsumerState<CreateCustomerScreen> {
 
                 const SizedBox(height: 30),
 
-                const SizedBox(height: 30),
-                //Gender
+                //Blood Group
                 DropdownButtonFormField<BloodGroupModel>(
                   initialValue: _selectedBloodGroup,
                   isDense: true,
@@ -223,7 +222,7 @@ class _CreateCustomerScreenState extends ConsumerState<CreateCustomerScreen> {
                     labelText: "Blood Group",
                     isDense: true,
                     contentPadding: const EdgeInsets.symmetric(
-                      vertical: 10, // 🔥 tighter vertical space
+                      vertical: 10, // tighter vertical space
                       horizontal: 10,
                     ),
                     prefixIcon: const Padding(
@@ -257,6 +256,7 @@ class _CreateCustomerScreenState extends ConsumerState<CreateCustomerScreen> {
 
                 const SizedBox(height: 30),
 
+                //Gender
                 RadioGroup<GenderModel>(
                   groupValue: _selectedGender,
                   // onChanged Updates

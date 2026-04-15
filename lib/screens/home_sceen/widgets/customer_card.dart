@@ -42,8 +42,6 @@ class CustomerCard extends ConsumerWidget {
                 Text("Email: ${customer.email}"),
                 const SizedBox(height: 4),
 
-                const SizedBox(height: 4),
-
                 //blood
                 Text("Blood Group: ${formatBloodGroup(customer.bloodgroup)}"),
                 //Gender
