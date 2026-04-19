@@ -1,4 +1,5 @@
 import 'package:ecoms/model/customer_model.dart';
+import 'package:ecoms/model/gender_model.dart';
 import 'package:ecoms/providers/customer_provider.dart';
 import 'package:ecoms/utils/blood_group.dart';
 import 'package:flutter/material.dart';
@@ -96,7 +97,7 @@ class CustomerCard extends ConsumerWidget {
                         const Icon(Icons.phone, size: 16, color: Colors.grey),
                         const SizedBox(width: 6),
                         Text(
-                          customer.phone,
+                          "Pnone: ${customer.phone}",
                           style: const TextStyle(fontSize: 15),
                         ),
                       ],
@@ -105,27 +106,49 @@ class CustomerCard extends ConsumerWidget {
                     const SizedBox(height: 4),
 
                     // Email
-                    if (customer.email != null && customer.email!.isNotEmpty)
-                      Row(
-                        children: [
-                          const Icon(Icons.email, size: 16, color: Colors.grey),
-                          const SizedBox(width: 6),
-                          Expanded(
-                            child: Text(
-                              customer.email!,
-                              style: const TextStyle(fontSize: 15),
-                              maxLines: 1,
-                              overflow: TextOverflow.ellipsis,
-                            ),
+                    Row(
+                      children: [
+                        const Icon(Icons.email, size: 16, color: Colors.grey),
+                        const SizedBox(width: 6),
+                        Expanded(
+                          child: Text(
+                            "Email: ${customer.email}",
+
+                            style: const TextStyle(fontSize: 15),
+                            maxLines: 1,
+                            overflow: TextOverflow.ellipsis,
                           ),
-                        ],
-                      ),
+                        ),
+                      ],
+                    ),
+
+                    const SizedBox(height: 8),
+
+                    //Gender
+                    Row(
+                      children: [
+                        Icon(
+                          customer.gender == GenderModel.male
+                              ? Icons.male
+                              : customer.gender == GenderModel.female
+                              ? Icons.female
+                              : Icons.person_rounded,
+                          size: 17,
+                          color: Colors.grey,
+                        ),
+                        const SizedBox(width: 5),
+                        Text(
+                          "Gender: ${customer.gender.name}",
+                          style: const TextStyle(fontSize: 15),
+                        ),
+                      ],
+                    ),
 
                     const SizedBox(height: 8),
 
                     // Address
                     Text(
-                      customer.address,
+                      "Adderss: ${customer.address}",
                       style: TextStyle(
                         fontSize: 14,
                         color: isDark ? Colors.grey[400] : Colors.grey[600],
@@ -134,17 +157,15 @@ class CustomerCard extends ConsumerWidget {
                       overflow: TextOverflow.ellipsis,
                     ),
 
-                    if (customer.secondaryAddress != null &&
-                        customer.secondaryAddress!.isNotEmpty) ...[
-                      const SizedBox(height: 4),
-                      Text(
-                        "Sec: ${customer.secondaryAddress}",
-                        style: TextStyle(
-                          fontSize: 13,
-                          color: Colors.grey.shade500,
-                        ),
+                    //Secondery Address
+                    const SizedBox(height: 4),
+                    Text(
+                      "Secondery Address: ${customer.secondaryAddress}",
+                      style: TextStyle(
+                        fontSize: 13,
+                        color: Colors.grey.shade500,
                       ),
-                    ],
+                    ),
                   ],
                 ),
               ),

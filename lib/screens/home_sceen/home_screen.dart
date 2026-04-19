@@ -20,12 +20,14 @@ class _HomeScreenState extends ConsumerState<HomeScreen> {
   @override
   Widget build(BuildContext context) {
     final customers = ref.watch(customerProvider);
+
+    //search logic
     final filteredCustomers =
         customers.where((customer) {
           final query = _searchQuery.toLowerCase();
           return customer.name.toLowerCase().contains(query) ||
-              (customer.email?.toLowerCase().contains(query) ?? false) ||
-              (customer.phone?.contains(query) ?? false);
+              (customer.email.toLowerCase().contains(query)) ||
+              (customer.phone.contains(query));
         }).toList();
 
     final isDark = ref.watch(themeProvider) == ThemeMode.dark;
@@ -49,6 +51,8 @@ class _HomeScreenState extends ConsumerState<HomeScreen> {
           ),
         ],
       ),
+
+      //Add new Customer Button
       floatingActionButton: FloatingActionButton.extended(
         onPressed: () => context.go('/create-customer'),
         icon: const Icon(Icons.add, color: Colors.white),
@@ -58,9 +62,11 @@ class _HomeScreenState extends ConsumerState<HomeScreen> {
         ),
         backgroundColor: const Color(0xFF2E7D32),
       ),
+
+      //
       body: RefreshIndicator(
         onRefresh: () async {
-          // Add refresh logic in your provider if needed
+          // can Add refresh logic in provider
           await Future.delayed(const Duration(milliseconds: 800));
         },
         child: Column(
@@ -70,10 +76,10 @@ class _HomeScreenState extends ConsumerState<HomeScreen> {
               padding: const EdgeInsets.fromLTRB(16, 16, 16, 8),
               child: SearchBar(
                 controller: _searchController,
-                hintText: 'Search customers...',
+                hintText: 'Search customers by name...',
                 leading: const Icon(Icons.search),
                 onChanged: (value) => setState(() => _searchQuery = value),
-                elevation: const WidgetStatePropertyAll(1),
+                elevation: const WidgetStatePropertyAll(4),
               ),
             ),
 
@@ -96,8 +102,6 @@ class _HomeScreenState extends ConsumerState<HomeScreen> {
                 ],
               ),
             ),
-
-            const SizedBox(height: 12),
 
             // Customer List
             Expanded(
@@ -171,13 +175,13 @@ class _HomeScreenState extends ConsumerState<HomeScreen> {
       child: Column(
         mainAxisAlignment: MainAxisAlignment.center,
         children: [
-          Icon(Icons.people_outline, size: 80, color: Colors.grey.shade400),
-          const SizedBox(height: 16),
+          Icon(Icons.people_outline, size: 60, color: Colors.grey.shade400),
+          const SizedBox(height: 8),
           const Text(
             'No Customers Found',
             style: TextStyle(fontSize: 20, fontWeight: FontWeight.w600),
           ),
-          const SizedBox(height: 8),
+          const SizedBox(height: 5),
           Text(
             _searchQuery.isEmpty
                 ? 'Start by adding your first customer'
@@ -185,13 +189,6 @@ class _HomeScreenState extends ConsumerState<HomeScreen> {
             style: TextStyle(color: Colors.grey.shade600),
             textAlign: TextAlign.center,
           ),
-          const SizedBox(height: 24),
-          if (_searchQuery.isEmpty)
-            ElevatedButton.icon(
-              onPressed: () => context.go('/create-customer'),
-              icon: const Icon(Icons.add),
-              label: const Text('Add First Customer'),
-            ),
         ],
       ),
     );
