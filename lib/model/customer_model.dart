@@ -1,17 +1,10 @@
+import 'package:ecoms/model/blood_group_model.dart';
+import 'package:ecoms/model/gender_model.dart';
 import 'package:hive/hive.dart';
 part 'customer_model.g.dart';
 
 @HiveType(typeId: 0)
 class Customer {
-  // Generative Constructor using Named Parameters.
-  Customer({
-    required this.name,
-    required this.phone,
-    required this.email,
-    required this.address,
-    required this.secondaryAddress,
-  });
-
   @HiveField(0)
   String name;
 
@@ -26,4 +19,21 @@ class Customer {
 
   @HiveField(4)
   String secondaryAddress;
+
+  @HiveField(5)
+  GenderModel gender;
+
+  @HiveField(6)
+  BloodGroupModel bloodgroup;
+
+  // Generative Constructor using Named Parameters.
+  Customer({
+    required this.name,
+    required this.phone,
+    required this.email,
+    required this.address,
+    required this.secondaryAddress,
+    required this.gender,
+    required this.bloodgroup,
+  });
 }

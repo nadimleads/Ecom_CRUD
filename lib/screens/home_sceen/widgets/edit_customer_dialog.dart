@@ -1,5 +1,8 @@
+import 'package:ecoms/model/blood_group_model.dart';
 import 'package:ecoms/model/customer_model.dart';
+import 'package:ecoms/model/gender_model.dart';
 import 'package:ecoms/providers/customer_provider.dart';
+import 'package:ecoms/utils/blood_group.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
@@ -26,6 +29,8 @@ class _EditCustomerDialogState extends ConsumerState<EditCustomerDialog> {
   late final TextEditingController _emialController;
   late final TextEditingController _addressController;
   late final TextEditingController _secondaryaddressController;
+  late GenderModel _selectedGender;
+  late BloodGroupModel _selectedBloodGroup;
 
   //prefilled thakar jonno initState use kora holo
   @override
@@ -33,6 +38,7 @@ class _EditCustomerDialogState extends ConsumerState<EditCustomerDialog> {
     super.initState();
 
     _nameController = TextEditingController(text: widget.customer.name);
+
     _phoneController = TextEditingController(
       text: widget.customer.phone.replaceFirst("+88", ""),
     );
@@ -41,6 +47,8 @@ class _EditCustomerDialogState extends ConsumerState<EditCustomerDialog> {
     _secondaryaddressController = TextEditingController(
       text: widget.customer.secondaryAddress,
     );
+    _selectedGender = widget.customer.gender;
+    _selectedBloodGroup = widget.customer.bloodgroup;
   }
 
   bool _autovalidation = false;
@@ -199,6 +207,74 @@ class _EditCustomerDialogState extends ConsumerState<EditCustomerDialog> {
 
               const SizedBox(height: 25),
 
+              const SizedBox(height: 25),
+
+              //Gender
+              DropdownButtonFormField<BloodGroupModel>(
+                initialValue: _selectedBloodGroup,
+                decoration: InputDecoration(
+                  labelText: "Blood Group",
+                  border: OutlineInputBorder(
+                    borderRadius: BorderRadius.circular(15),
+                  ),
+                  prefixIcon: Icon(Icons.bloodtype),
+                ),
+                items:
+                    BloodGroupModel.values.map((bg) {
+                      return DropdownMenuItem(
+                        value: bg,
+                        child: Text(formatBloodGroup(bg)), // ✅ HERE
+                      );
+                    }).toList(),
+                onChanged: (value) {
+                  setState(() {
+                    _selectedBloodGroup = value!;
+                  });
+                },
+              ),
+
+              const SizedBox(height: 25),
+
+              RadioGroup<GenderModel>(
+                groupValue: _selectedGender,
+                // onChanged Updates
+                onChanged: (value) {
+                  setState(() {
+                    _selectedGender = value!;
+                  });
+                },
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    const Text(
+                      "Gender",
+                      style: TextStyle(
+                        fontWeight: FontWeight.bold,
+                        fontSize: 16,
+                      ),
+                    ),
+                    const SizedBox(height: 8),
+
+                    RadioListTile<GenderModel>(
+                      title: const Text("Male"),
+                      value: GenderModel.male,
+                    ),
+
+                    RadioListTile<GenderModel>(
+                      title: const Text("Female"),
+                      value: GenderModel.female,
+                    ),
+
+                    RadioListTile<GenderModel>(
+                      title: const Text("Other"),
+                      value: GenderModel.other,
+                    ),
+                  ],
+                ),
+              ),
+
+              const SizedBox(height: 25),
+
               /// Save Button
               SizedBox(
                 width: double.infinity,
@@ -219,6 +295,8 @@ class _EditCustomerDialogState extends ConsumerState<EditCustomerDialog> {
                         email: _emialController.text,
                         address: _addressController.text,
                         secondaryAddress: _secondaryaddressController.text,
+                        gender: _selectedGender,
+                        bloodgroup: _selectedBloodGroup,
                       );
 
                       ref

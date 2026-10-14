@@ -1,4 +1,7 @@
+import 'package:ecoms/model/blood_group_model.dart';
+import 'package:ecoms/model/gender_model.dart';
 import 'package:ecoms/providers/customer_provider.dart';
+import 'package:ecoms/utils/blood_group.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
@@ -17,15 +20,18 @@ class _CreateCustomerScreenState extends ConsumerState<CreateCustomerScreen> {
 
   final _nameController = TextEditingController();
   final _phoneController = TextEditingController();
-  final _emailController = TextEditingController(); // Fixed spelling
+  final _emailController = TextEditingController();
   final _addressController = TextEditingController();
-  final _secondaryAddressController = TextEditingController(); // Better name
+  final _secondaryAddressController = TextEditingController();
+  GenderModel _selectedGender = GenderModel.male;
+  BloodGroupModel _selectedBloodGroup = BloodGroupModel.O_POS;
 
   final _nameFocus = FocusNode();
   final _phoneFocus = FocusNode();
   final _emailFocus = FocusNode();
   final _addressFocus = FocusNode();
   final _secaddressFocus = FocusNode();
+  // final GenderModel _genderFocus = GenderModel.male;
 
   // This is the key for real-time validation
   bool _autoValidate = false;
@@ -204,6 +210,93 @@ class _CreateCustomerScreenState extends ConsumerState<CreateCustomerScreen> {
 
                 const SizedBox(height: 30),
 
+                //Blood Group
+                DropdownButtonFormField<BloodGroupModel>(
+                  initialValue: _selectedBloodGroup,
+                  isDense: true,
+                  icon: const Icon(
+                    Icons.arrow_drop_down,
+                    size: 20,
+                  ), // smaller arrow
+                  decoration: InputDecoration(
+                    labelText: "Blood Group",
+                    isDense: true,
+                    contentPadding: const EdgeInsets.symmetric(
+                      vertical: 10, // tighter vertical space
+                      horizontal: 10,
+                    ),
+                    prefixIcon: const Padding(
+                      padding: EdgeInsets.only(left: 8, right: 6),
+                      child: Icon(Icons.bloodtype, size: 20),
+                    ),
+                    prefixIconConstraints: const BoxConstraints(
+                      minWidth: 30,
+                      minHeight: 30,
+                    ),
+                    border: OutlineInputBorder(
+                      borderRadius: BorderRadius.circular(15),
+                    ),
+                  ),
+                  items:
+                      BloodGroupModel.values.map((bg) {
+                        return DropdownMenuItem(
+                          value: bg,
+                          child: Text(
+                            formatBloodGroup(bg),
+                            style: const TextStyle(fontSize: 14),
+                          ),
+                        );
+                      }).toList(),
+                  onChanged: (value) {
+                    setState(() {
+                      _selectedBloodGroup = value!;
+                    });
+                  },
+                ),
+
+                const SizedBox(height: 30),
+
+                //Gender
+                RadioGroup<GenderModel>(
+                  groupValue: _selectedGender,
+                  // onChanged Updates
+                  onChanged: (value) {
+                    setState(() {
+                      _selectedGender = value!;
+                    });
+                  },
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      const Text(
+                        "Gender",
+                        style: TextStyle(
+                          fontWeight: FontWeight.bold,
+                          fontSize: 16,
+                        ),
+                      ),
+                      const SizedBox(height: 8),
+
+                      RadioListTile<GenderModel>(
+                        title: const Text("Male"),
+                        value: GenderModel.male,
+                      ),
+
+                      RadioListTile<GenderModel>(
+                        title: const Text("Female"),
+                        value: GenderModel.female,
+                      ),
+
+                      RadioListTile<GenderModel>(
+                        title: const Text("Other"),
+                        value: GenderModel.other,
+                      ),
+                    ],
+                  ),
+                ),
+
+                const SizedBox(height: 30),
+
                 // Save Button
                 SizedBox(
                   width: double.infinity,
@@ -227,12 +320,14 @@ class _CreateCustomerScreenState extends ConsumerState<CreateCustomerScreen> {
                           address: _addressController.text.trim(),
                           secondaryAddress:
                               _secondaryAddressController.text.trim(),
+                          gender: _selectedGender,
+                          bloodgroup: _selectedBloodGroup,
                         );
 
                         ref
                             .read(customerProvider.notifier)
                             .addCustomer(newCustomer);
-                        context.pop();
+                        context.go('/'); // Stack issue Fix (Simple way)
                       }
                     },
                     child: const Text(
